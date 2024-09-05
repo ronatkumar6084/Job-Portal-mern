@@ -5,6 +5,8 @@ import jwt from "jsonwebtoken";
 export const signup= async(req, res) =>{
     try {
         const {fullName, email, phoneNumber, password, role} = req.body;
+        console.log(fullName, email, phoneNumber, password, role);
+        
         if(!fullName || !email || !phoneNumber || !password || !role){
             return res.status(500).json({
                 message:"All field are required",
@@ -45,10 +47,11 @@ export const signup= async(req, res) =>{
 export const login = async(req, res)=>{
     try {
         const {email,password, role}= req.body;
+        console.log(email, password, role);
           
           if(!email || !password || !role){
             return res.status(400).json({
-                error:"Please fill all the fields", 
+                message:"Please fill all the fields", 
                  success:false});
           };
 
@@ -57,14 +60,14 @@ export const login = async(req, res)=>{
          
          if(!user || !isPasswordCorrect){
             return res.status(400).json({ 
-             error: "Invalid email or password",
+             message: "Invalid email or password",
              success:false });
          };
 
          // check role is correct or not
          if(role !== user?.role){
             return res.status(400).json({
-                error:"Account doesn't match with current role",
+                message:"Account doesn't match with current role",
                 success:false
             });
          };
