@@ -4,6 +4,10 @@ import Signup from './components/auth/Signup';
 import Login from './components/auth/Login';
 import Home from './components/Home';
 import Jobs from './components/Jobs';
+import Browse from './components/Browse';
+import Profile from './components/Profile';
+import JobDescription from './components/JobDescription';
+
 
 const appRouter = createBrowserRouter([
   {
@@ -21,7 +25,19 @@ const appRouter = createBrowserRouter([
   {
     path:'/jobs',
     element:<Jobs/>
-  }
+  },
+  {
+    path: "/description/:id",
+    element: <JobDescription />
+  },
+ {
+  path:'/browse',
+  element:<Browse/>
+ },
+ {
+  path:'/profile',
+  element:<Profile/>
+ }
 ])
 
 

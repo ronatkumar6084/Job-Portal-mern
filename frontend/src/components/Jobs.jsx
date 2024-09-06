@@ -3,7 +3,7 @@ import Navbar from "./shared/Navbar";
 import FilterJob from "./FilterJob";
 import Job from "./Job";
 
-const jobsArray = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const jobsArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 const Jobs = () => {
   return (
     <div>
