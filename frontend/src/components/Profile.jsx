@@ -5,16 +5,21 @@ import { Button } from "./ui/button";
 import { Contact, Mail, Pen } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import AppliedJobTable from "./AppliedJobTable";
 import UpdateProfileDialog from "./UpdateProfileDialog";
+import { useSelector } from "react-redux";
+import { defaultProfilePic } from "@/utils/constant";
+import useGetAppliedJobs from "@/hooks/useGetAppliedJobs";
 
-const skills = ["C","Java","HTML CSS","JavaScript","SQL","React.Js","Node.js"]
+// const skills = ["C","Java","HTML CSS","JavaScript","SQL","React.Js","Node.js"]
+const isHaveResume = true;
 
 const Profile = () => {
+    useGetAppliedJobs();
     const [open ,setOpen] = useState(false);
-
-    const isHaveResume = true;
+    const {user} = useSelector(store=>store.auth);
+   
   return (
     <div>
       <Navbar />
@@ -23,16 +28,13 @@ const Profile = () => {
           <div className="flex items-center gap-4">
             <Avatar className="h-24 w-24">
               <AvatarImage
-                src="https://www.logodesign.net/logo/line-art-buildings-in-swoosh-1273ld.png?nwm=1&nws=1&industry=company&sf=&txt_keyword=All"
+                src={user?.profile?.profilePhoto ? user?.profile?.profilePhoto : defaultProfilePic}
                 alt="profilePic"
               />
             </Avatar>
             <div>
-              <h1 className="font-medium text-xl">Full Name</h1>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
-                laborum est.
-              </p>
+              <h1 className="font-medium text-xl">{user?.fullName}</h1>
+              <p>{user?.profile?.bio}</p>
             </div>
           </div>
           <Button onClick={()=> setOpen(true)} className="text-right" variant="outline">
@@ -42,25 +44,25 @@ const Profile = () => {
         <div className="my-5">
             <div className="flex items-center gap-3 my-2"> 
             <Mail/>
-            <span>muni@mail.com</span>
+            <span>{user?.email}</span>
             </div>
             <div className="flex items-center gap-3 my-2"> 
             <Contact/>
-            <span>9874563210</span>
+            <span>{user?.phoneNumber}</span>
             </div>   
         </div>
         <div className="my-5">
             <h1 className="font-bold">Skills</h1>
             <div className="flex items-center gap-2">
             {
-                skills?.length !== 0 ? skills.map((item,index)=><Badge key={index}>{item}</Badge>) : <span>N/A</span>
+                user?.profile?.skills?.length !== 0 ? user?.profile?.skills.map((item,index)=><Badge key={index}>{item}</Badge>) : <span>N/A</span>
             }
             </div>  
         </div>
         <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label className="text-md font-bold">Resume</Label>
             {
-                isHaveResume ? <Link target="_blank" to="https://www.zeptonow.com/" className="hover:text-blue-500 hover:underline cursor-pointer">Ronat_Resume.pdf</Link> : <span>N/A</span>
+                isHaveResume ? <a target="blank" href={user?.profile?.resume} className="hover:text-blue-500 hover:underline cursor-pointer">{user?.profile?.resumeOriginalName}</a> : <span>N/A</span>
             }
         </div>
       </div>
