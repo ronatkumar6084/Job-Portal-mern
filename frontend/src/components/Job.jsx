@@ -18,7 +18,7 @@ const Job = ({job}) => {
   return (
     <div className="p-5 rounded-md shadow-xl bg-white border border-gray-400">
       <div className="flex items-center justify-between">
-      <p className="text-sm text-gray-500">{daysAgo(job?.createdAt) === 0 ? "Today" : `${daysAgo(job?.createdAt)}`}{" "}Days ago</p>
+      <p className="text-sm text-gray-500">{daysAgo(job?.createdAt) === 0 ? "Today" : `${daysAgo(job?.createdAt)} Days ago`}</p>
       <Button variant="outline" className="rounded-full" size="icon">
         <Bookmark />
       </Button>
@@ -45,7 +45,7 @@ const Job = ({job}) => {
       <Badge className={"text-[#463aece1] font-bold"} variant={"ghost"}>{job?.salary} LPA</Badge>
     </div>
     <div className="flex items-center gap-4 mt-4">
-      <Button onClick={()=> navigate(`/description/${job?._id}`)} variant="outline">Details</Button>
+      <Button job={job} onClick={()=> navigate(`/description/${job?._id}`)} variant="outline">Details</Button>
       <Button className="bg-[#121097f5]">Save for later</Button>
     </div>
     </div>

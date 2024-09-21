@@ -7,6 +7,7 @@ import { APPLICATION_API_END_POINT, JOB_API_END_POINT } from "@/utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import { setSingleJob } from "@/redux/jobSlice";
 import { toast } from "sonner";
+import { Avatar, AvatarImage } from "./ui/avatar";
 
 const JobDescription = () => {
     const {singleJob} = useSelector(store=>store.job)
@@ -60,7 +61,18 @@ const JobDescription = () => {
     <div className="max-w-5xl mx-auto my-10">
         <div className="flex items-center justify-between">
         <div>
+          <div className="flex items-center gap-2 my-2">
+          <Button className="p-6" variant="outline" size="icon">
+          <Avatar>
+            <AvatarImage src={singleJob?.company?.logo} />
+          </Avatar>
+        </Button>
+        <div>
+        <h1 className="font-bold text-xl">{singleJob?.company?.name}</h1>
         <h1 className="font-bold text-xl">{singleJob?.title}</h1>
+        </div>
+          </div>
+        
         <div className="flex items-center gap-2 mt-4">
           <Badge className={"text-[#F83002] font-bold"} variant={"ghost"}>{singleJob?.vacancies} Vacancies</Badge>  
           <Badge className={"text-[#a232ce] font-bold"} variant={"ghost"}>{singleJob?.jobType}</Badge>

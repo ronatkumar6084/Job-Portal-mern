@@ -20,8 +20,10 @@ const UpdateProfileDialog = ({open, setOpen}) => {
         phoneNumber:user?.phoneNumber,
         bio:user?.profile?.bio,
         skills:user?.profile?.skills?.map((skill)=> skill),
-        file:user?.profile?.resume
-    });
+        file:user?.profile?.resume,
+         
+    }); 
+    //profilePhoto:user?.profile?.profilePhoto,
 
     const dispatch = useDispatch();
     const changeEventHandler =(e)=>{
@@ -31,6 +33,10 @@ const UpdateProfileDialog = ({open, setOpen}) => {
         const file = e.target.files?.[0];
         setInput({...input, file})
     }
+    // const profilePhotoChangeHandler =(e)=>{
+    //     const profilePhoto = e.target.files?.[0]
+    //     setInput({...input, profilePhoto})
+    // }
 
     const submitHandler = async(e)=>{
         e.preventDefault();
@@ -43,6 +49,9 @@ const UpdateProfileDialog = ({open, setOpen}) => {
         if(input.file){
             formData.append("file",input.file);
         }
+        // if(input.profilePhoto){
+        //     formData.append("profilePhoto",input.profilePhoto);
+        // }
         try {
             setLoading(true);
             const res = await axios.post(`${USER_API_END_POINT}/profile/update`, formData,{
@@ -60,8 +69,7 @@ const UpdateProfileDialog = ({open, setOpen}) => {
             setLoading(false);
         }
         setOpen(false);
-        console.log(input);
-        
+        console.log(input);     
     }
 
   return (
@@ -98,6 +106,7 @@ const UpdateProfileDialog = ({open, setOpen}) => {
                     <Input 
                         id="phoneNumber"
                         name="phoneNumber"
+                        type="number"
                         value={input.phoneNumber}
                         onChange={changeEventHandler} 
                         className="col-span-3"
@@ -129,11 +138,12 @@ const UpdateProfileDialog = ({open, setOpen}) => {
                         id="file"
                         name="file"
                         type="file"
-                        accept="application/pdf"
+                        accept="image/*"
                         onChange={fileChangeHandler} 
-                        className="col-span-3"
+                        className="col-span-3 cursor-pointer"
                     />
                     </div>
+                    
                 </div>
                 <DialogFooter>
                 {
@@ -150,3 +160,15 @@ const UpdateProfileDialog = ({open, setOpen}) => {
 }
 
 export default UpdateProfileDialog
+
+{/* <div className='grid grid-cols-4 items-center gap-4'>
+                    <Label htmlFor="file" className="text-right">Profile Photo</Label>
+                    <Input 
+                        id="profilePhoto"
+                        name="profilePhoto"
+                        type="file"
+                        accept="image/*"
+                        onChange={profilePhotoChangeHandler} 
+                        className="col-span-3 cursor-pointer"
+                    />
+                    </div> */}

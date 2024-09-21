@@ -15,6 +15,7 @@ export const signup= async(req, res) =>{
             });
         };
 
+        //profilePhoto
         const file = req.file;
         const fileUri = getDataUri(file);
         const cloudResponse = await cloudinary.uploader.upload(fileUri.content)
@@ -131,6 +132,11 @@ export const updateProfile = async (req,res)=>{
         const file = req.file;
         const fileUri = getDataUri(file);
         const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+
+        //update profile photo
+        // const profilePhoto = req.file;
+        // const profilePhotoUri = getDataUri(profilePhoto);
+        // const profilePhotoCloudResponse = await cloudinary.uploader.upload(profilePhotoUri.content);
         
         let skillsArray;
         if(skills){
@@ -158,6 +164,11 @@ export const updateProfile = async (req,res)=>{
             user.profile.resume = cloudResponse.secure_url; // save the cloudinary url
             user.profile.resumeOriginalName = file.originalname; // Save the original file name
          }
+
+         //profilePhoto
+        //  if(profilePhotoCloudResponse){
+        //     user.profile.profilePhoto = profilePhotoCloudResponse.secure_url;
+        //  }
 
          await user.save();
 
